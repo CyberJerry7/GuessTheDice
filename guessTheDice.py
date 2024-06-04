@@ -3,11 +3,15 @@
 
 import random
 
+
 # diceNumber = 6
-# name = "Jerry"
-diceNumber = random.randint(1,6)
+hs = open("Python/GuessTheDice/player/scores.txt","r")
+highScore = int(hs.read())
+hs.close()
+Pname = open("Python/GuessTheDice/player/name.txt",'r')
+name = Pname.read()
+Pname.close()
 score = 0
-highScore = 0
 
 def diceFace():
     def diceNum1():
@@ -87,7 +91,27 @@ def diceFace():
 
 print("\n\n\n \t \t \t \t \t    >>> - Guess the dice - <<< \n \n \n")
 
-name = input("Dear user, Enter your good name: ")
+if name == "none": # if there is no name then we will ask user to enter the name
+    name = input("Enter your good name: ")
+    Pname = open("Python/GuessTheDice/player/name.txt",'w')
+    updateName = Pname.write(name)
+    Pname.close()
+
+else: 
+    print(f"Hey user, wanna start as {name}? press ENTER to continue")
+    userChoice = input("Else Press '0' to start new game : ")
+    
+    if userChoice == '0':
+        name = input("\nEnter your good name: ")
+        Pname = open("Python/GuessTheDice/player/name.txt",'w')
+        updateName = Pname.write(name)
+        Pname.close()
+
+        hs = open("Python/GuessTheDice/player/scores.txt","w")
+        abc = hs.write("0")
+        hs.close()
+        
+    
 
 print("\n\n\n***************************************************\n\n\n")
 
@@ -110,7 +134,7 @@ def scores():
     print("\n")
 
 while True:
-
+    diceNumber = random.randint(1,6)
     scores()
 
     userGuess = int(input("Guess the dice : "))
@@ -126,6 +150,10 @@ while True:
         
         if(highScore == score):
             highScore = highScore + 1
+            hs = open("Python/GuessTheDice/player/scores.txt","w")
+            abc = hs.write(str(highScore))
+            hs.close()
+
 
         score = score + 1
 
